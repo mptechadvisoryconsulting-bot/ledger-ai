@@ -1,0 +1,82 @@
+export type PaymentMethodType = "bank" | "card";
+
+export type InvoiceStatus = "draft" | "sent" | "partial" | "paid" | "overdue";
+
+export type InvoiceLineItem = {
+  id: string;
+  productId?: string;
+  name: string;
+  quantity: number;
+  unitAmount: number;
+};
+
+export type Invoice = {
+  id: string;
+  number: string;
+  customerName: string;
+  customerEmail: string;
+  customerState?: string;
+  dueDate: string;
+  status: InvoiceStatus;
+  paidAt?: string;
+  memo?: string;
+  items: InvoiceLineItem[];
+};
+
+export type ProductCategory = {
+  id: string;
+  name: string;
+  description: string;
+};
+
+export type Product = {
+  id: string;
+  sku: string;
+  name: string;
+  categoryId: string;
+  categoryName: string;
+  description: string;
+  unitPrice: number;
+  taxable: boolean;
+  active: boolean;
+  unitsSold: number;
+  revenue: number;
+};
+
+export type Customer = {
+  id: string;
+  businessName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  billingAddress: string;
+  defaultPaymentMethod?: PaymentMethodType;
+  autopayEnabled: boolean;
+  quickbooksCustomerId?: string;
+  jobberClientId?: string;
+};
+
+export type RecurringBillingSchedule = {
+  id: string;
+  customerId: string;
+  customerName: string;
+  productName: string;
+  amount: number;
+  interval: "weekly" | "monthly" | "quarterly" | "yearly";
+  nextInvoiceDate: string;
+  autopayEnabled: boolean;
+  paymentMethod: PaymentMethodType;
+  status: "active" | "paused" | "cancelled";
+};
+
+export type PaymentQuote = {
+  method: PaymentMethodType;
+  label: string;
+  feeLabel: string;
+  customerMessage: string;
+  estimatedFeeCents?: number;
+  amountDueCents?: number;
+  totalPayableCents?: number;
+  recommended?: boolean;
+  disclosure?: string;
+};
